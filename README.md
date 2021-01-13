@@ -1,34 +1,4 @@
-I build a list of science windows (only SWID). (say e.g. list_scw.txt)
-
-then I cd to /gpfs0/ferrigno/INTEGRAL/nrt_analysis for NRT or /gpfs0/ferrigno/INTEGRAL/scw_analysis for CONS
-
-I edit the script launch_osa11.csh to select if I want to run ISGRI, or JEMX.
-
-I build a catalog, a matrix (if needed) from somewhere.
-
-I edit the scripts
-
-ISGRI_onescw.sh
-
-or
-
-JEMX1_onescw.sh
-
-to select the catalog, define parameters etc.
-
-I run
-
-./launch_osa11.csh list_scw.txt
-
-If I need to extract spectrum or lightc curve I run the script
-
-com_extract.sh
-
-If I need a mosaic, I use ISGRI_mosa.csh after some editing
-
 # Baobab-Bash adaption
-
-two forms of adaption:
 
 ## singularity-osa.sh
 
@@ -75,6 +45,21 @@ $ ./singularity-osa.sh ls -lotr /isdc/arc/rev_3/scw | wc -l
 $ ./singularity-osa.sh ls -lotr ./scw | wc -l
 2123
 ```
+
+## Case workflows
+
+ISGRI_onescw.sh
+
+or
+
+JEMX1_onescw.sh
+
+If I need to extract spectrum or lightc curve I run the script
+
+com_extract.sh
+
+If I need a mosaic, I use ISGRI_mosa.csh after some editing
+
 
 
 ## Separating boilerplate functions
