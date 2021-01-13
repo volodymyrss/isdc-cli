@@ -12,6 +12,7 @@ echo -e "\033[31msingularity-osa with command: \"$@\"\033[0m"
 
 cd $(realpath $PWD)
 
+source $HOME/.bash_profile
 source $HOME/env/init.sh
 
 IMAGE=$SHARED_SCRATCH/singularity/integral-pack-0.1.sif
@@ -29,7 +30,6 @@ elif [ ${osa_version} == "11.0" ]; then
 fi
 
 
-set -x
 
 singularity exec \
         -B /srv:/srv \
@@ -42,8 +42,6 @@ singularity exec \
         -B $SHARED_SCRATCH/data/aux:/isdc/arc/rev_3/aux \
         -B $SHARED_SCRATCH/data/ic:/isdc/arc/rev_3/ic\
         $IMAGE \
-        bash -c "export HOME_OVERRRIDE=$HOME; source /init${init_suffix}.sh; $cmd"
-
-set +x
+        bash -c "source $HOME/.bash_profile; export HOME_OVERRRIDE=$HOME; echo -n loading\ env...; source /init${init_suffix}.sh; echo done; $cmd"
 
 #

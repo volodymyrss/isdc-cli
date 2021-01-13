@@ -164,7 +164,6 @@ if [ "$cmd" == "" ]; then
     C_COMMAND="\033[35m"
     C_NO="\033[0m"
     echo -e "
-	Many functions of this script.
 
             $C_STRONG Prepared-For       $C_NO INTEGRAL users
             $C_STRONG Prepared-By        $C_NO VS
@@ -172,34 +171,19 @@ if [ "$cmd" == "" ]; then
             $C_STRONG Reference-Location $C_NO https://gitlab.astro.unige.ch/savchenk/Misc_Scripts/-/blob/master/ISDC/actions.sh
             $C_STRONG Metadata-Schema    $C_NO https://redmine.astro.unige.ch/projects/cdci/wiki/Metadata-Schema
 
-
-	you may want to:
-	
-	download some data (you may not want to just add this to the analysis without taking care of restricting threading)
-
-	$C_COMMAND 
-	./singularity-osa.sh $PWD/actions.sh download-data 066500220010
-	$C_NO
-
-	run one scw right here:
-
-	$C_COMMAND 
-	# ./singularity-osa.sh ./ISGRI_onescw.sh 206300290010 1
-	$C_NO
-	
-	submit one scw ISGRI:
-
-	$C_COMMAND
-	# ./actions.sh launcher_isgri ISGRI_onescw.sh 206300290010
-	$C_NO
-
-	and launch them all:
-
-	$C_COMMAND
-	./actions.sh launch_by_scw osa11 ./ISGRI_onescw.sh
-	$C_NO
-
 "
+    cat ${HOME}/.local/share/doc/isdc-cli.md | awk '
+		/^#/ && ! /^## isdc-cli/ { on = 0 }
+
+		on == 1 {
+			gsub("```bash", "'$C_COMMAND'")
+			gsub("```", "'$C_NO'")
+			print "      "$0
+		}
+
+		/^## isdc-cli/ { on = 1 }
+	'
+
     echo_red "all available functions:"
     cat $0 | egrep '^function ' | awk '{print "   "$2}'
 
