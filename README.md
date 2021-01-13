@@ -55,8 +55,6 @@ $ isdc-singularity ls -lotr ./scw | wc -l
 2123
 ```
 
-## isdc-singularity
-
 you may want to:
 	
 download some data (you may not want to just add this to the analysis without taking care of restricting threading)

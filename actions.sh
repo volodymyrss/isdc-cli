@@ -168,7 +168,7 @@ if [ "$cmd" == "" ]; then
             $C_STRONG Prepared-For       $C_NO INTEGRAL users
             $C_STRONG Prepared-By        $C_NO VS
             $C_STRONG See-Also           $C_NO https://redmine.astro.unige.ch/issues/21574
-            $C_STRONG Reference-Location $C_NO https://gitlab.astro.unige.ch/savchenk/Misc_Scripts/-/blob/master/ISDC/actions.sh
+            $C_STRONG Reference-Location $C_NO https://github.com/volodymyrss/isdc-cli/blob/master/actions.sh
             $C_STRONG Metadata-Schema    $C_NO https://redmine.astro.unige.ch/projects/cdci/wiki/Metadata-Schema
 
 "
