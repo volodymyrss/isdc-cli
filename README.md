@@ -106,7 +106,7 @@ https://github.com/volodymyrss/cli-bao-ygg-unige
 
 But it is used solely on client side, synchronizing locations on remote clusters, avoiding any need of tracking versions of software over different systems. It is also uploading software and data on the remote clusters as necessary.
 
-isdc-cli, on the other hand, is used on the cluster itself. It is one of the tools which can be uploaded on the clusters with cli-bao-igg.
+isdc-cli, on the other hand, is used on the cluster itself. It is one of the payloads which can be uploaded on the clusters with cli-bao-igg.
 
 Both tools can be used in conjunction.
 
