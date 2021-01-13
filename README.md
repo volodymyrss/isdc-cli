@@ -5,7 +5,7 @@
 You can also install it in your local space:
 
 ```bash
-make install
+git clone https://github.com/volodymyrss/isdc-cli.git && make -C isdc-cli install
 ```
 
 and then use `isdc-cli` and `isdc-singularity` commands.
