@@ -1,4 +1,8 @@
-# Baobab-Bash adaption
+# OSA in HPC
+
+Baobab-Yggdrasil-Bash adaption
+
+to run ScW-per-ScW analysis
 
 ## Install it!
 
