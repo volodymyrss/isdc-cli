@@ -21,31 +21,16 @@ function scwlist() {
     tail -n 10 $scwlist
 }
 
+function compat_warning() {
+	echo_red "OMC Light curve is in another script! please use launch_scw_job with any of ISDC_one.scripts"
+}
 
 function launcher_omc_lc() {
-    echo_red "OMC Light curve"
-    echo "placeholder"
-    #echo "qsub -q test -N O_$dir OMC_onescw.csh $dir"
-    #qsub -q test -N O_$dir OMC_onescw.csh $dir 
+     compat_warning    
 }
 
 function launcher_jemx() {
-    echo "Do JEM-X analysis:"
-
-    #J light curves
-    #qsub -q test -N J1L_$dir JEMX1_onescw_lcr.csh $dir
-    #echo "qsub -q test -N J1_$dir JEMX1_onescw_lcr.csh $dir"
-    #qsub -q test -N J2L_$dir JEMX2_onescw_lcr.csh $dir
-    #echo "qsub -q test -N J2_$dir JEMX2_onescw_lcr.csh $dir"
-
-    #J1 Spectum/IMA
-    echo "qsub -q test -N J1_$dir JEMX1_onescw.sh $dir"
-    qsub -q test -N J1_$dir JEMX1_onescw.sh $dir 
-    #J2 spectrum/IMA
-    #echo "qsub -q test -N J2_$dir JEMX2_onescw.sh $dir"
-    #qsub -q test -N J2_$dir JEMX2_onescw.sh $dir
-    #echo "JMX2_lcr.csh $dir"
-    #qsub JMX2_lcr.csh $dir
+    compat_warning    
 }
 
 function launch_scw_job() {
@@ -66,30 +51,7 @@ function launch_scw_job() {
 }
 
 function launcher_isgri() {
-    dir=${1:?the "dir" directory}
-
-    echo_red "Do IBIS/ISGRI analysis:"
-    set -x
-    #echo "qsub ./ISGRI_onescw_special.csh $dir"
-    #qsub ./ISGRI_onescw_special.csh $dir
-    #echo "qsub -q test -N I_$dir ./ISGRI_onescw_test.csh $dir"
-    #qsub -q test -N I_$dir ./ISGRI_onescw_test.csh $dir
-    #echo "qsub -q test -N I_$dir ./ISGRI_onescw_spec.csh $dir"
-    #qsub -q test -N I_$dir ./ISGRI_onescw_spec.csh $dir
-    
-    sbatch -o $PWD/work/logs/${dir}.log $(which isdc-singularity) "./ISGRI_onescw.sh $dir 1"
-
-    #qsub -q test test_fs.csh
-
-    #echo "qsub -q test -N I_$dir ./ISGRI_onescw_lc_v404.csh $dir"
-    #qsub -q test -N I_$dir ./ISGRI_onescw_lc_v404.csh $dir
-
-
-    #qsub -hold_jid I_$dir,J1_$dir,J2_$dir -q test -N E_$dir ISGRI_onescw_evt_extr.csh $dir
-    #echo "qsub -hold_jid I_$dir,J1_$dir,J2_$dir -q test -N E_$dir ISGRI_onescw_evt_extr.csh $dir"
-    
-    #echo "qsub -hold_jid I_$dir -N L_$dir -q test  ISGRI_ii_light.csh $dir"
-    #qsub -hold_jid I_$dir -N L_$dir -q test  ISGRI_ii_light.csh $dir
+    compat_warning    
 }
 
 
