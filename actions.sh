@@ -30,22 +30,14 @@ function launcher_omc_lc() {
 }
 
 function launcher_jemx() {
-    echo "Do JEM-X analysis:"
-
-    #J light curves
-    #qsub -q test -N J1L_$dir JEMX1_onescw_lcr.csh $dir
-    #echo "qsub -q test -N J1_$dir JEMX1_onescw_lcr.csh $dir"
-    #qsub -q test -N J2L_$dir JEMX2_onescw_lcr.csh $dir
-    #echo "qsub -q test -N J2_$dir JEMX2_onescw_lcr.csh $dir"
-
+    echo_red "Do JEM-X analysis:"
+    echo "placeholder"	
     #J1 Spectum/IMA
-    echo "qsub -q test -N J1_$dir JEMX1_onescw.sh $dir"
-    qsub -q test -N J1_$dir JEMX1_onescw.sh $dir 
+    #echo "qsub -q test -N J1_$dir JEMX1_onescw.sh $dir"
+    #qsub -q test -N J1_$dir JEMX1_onescw.sh $dir 
     #J2 spectrum/IMA
     #echo "qsub -q test -N J2_$dir JEMX2_onescw.sh $dir"
     #qsub -q test -N J2_$dir JEMX2_onescw.sh $dir
-    #echo "JMX2_lcr.csh $dir"
-    #qsub JMX2_lcr.csh $dir
 }
 
 function launch_scw_job() {
@@ -62,7 +54,7 @@ function launch_scw_job() {
     mkdir -pv $logdir
 
     # can export here osa_version=10.2 or so 
-    sbatch -o "$logdir/${job_scw}.log" $(which isdc-singularity) "$(realpath $job_script) $args"
+    sbatch --job-name="$1_$job_script"  -o "$logdir/${job_scw}.log" $(which isdc-singularity) "$(realpath $job_script) $args"
 }
 
 function launcher_isgri() {
@@ -70,26 +62,9 @@ function launcher_isgri() {
 
     echo_red "Do IBIS/ISGRI analysis:"
     set -x
-    #echo "qsub ./ISGRI_onescw_special.csh $dir"
-    #qsub ./ISGRI_onescw_special.csh $dir
-    #echo "qsub -q test -N I_$dir ./ISGRI_onescw_test.csh $dir"
-    #qsub -q test -N I_$dir ./ISGRI_onescw_test.csh $dir
-    #echo "qsub -q test -N I_$dir ./ISGRI_onescw_spec.csh $dir"
-    #qsub -q test -N I_$dir ./ISGRI_onescw_spec.csh $dir
     
-    sbatch -o $PWD/work/logs/${dir}.log $(which isdc-singularity) "./ISGRI_onescw.sh $dir 1"
-
-    #qsub -q test test_fs.csh
-
-    #echo "qsub -q test -N I_$dir ./ISGRI_onescw_lc_v404.csh $dir"
-    #qsub -q test -N I_$dir ./ISGRI_onescw_lc_v404.csh $dir
-
-
-    #qsub -hold_jid I_$dir,J1_$dir,J2_$dir -q test -N E_$dir ISGRI_onescw_evt_extr.csh $dir
-    #echo "qsub -hold_jid I_$dir,J1_$dir,J2_$dir -q test -N E_$dir ISGRI_onescw_evt_extr.csh $dir"
+    sbatch --job_name="${dir}_ISGRI_onescw.sh" -o $PWD/work/logs/${dir}.log $(which isdc-singularity) "./ISGRI_onescw.sh $dir 1"
     
-    #echo "qsub -hold_jid I_$dir -N L_$dir -q test  ISGRI_ii_light.csh $dir"
-    #qsub -hold_jid I_$dir -N L_$dir -q test  ISGRI_ii_light.csh $dir
 }
 
 
@@ -114,15 +89,15 @@ function launch_by_scw() {
 }
 
 function watch_and_tail(){
-    while true; do squeue -u savchenk | grep -v R || break; sleep 1; done; tail -n 1000 -f $(ls -tr work/logs/ISGRI_onescw.sh/*/* | tail -1)
+    while true; do squeue -u `who -m | awk '{print $1}'` | grep -v R || break; sleep 1; done; tail -n 1000 -f $(ls -tr work/logs/*/*/* | tail -1)
 }
 
 function launch_mosaic() {
     set -x
-    qsub -hold_jid "I_*" -N I_MOSA -q test  ISGRI_mosa.csh obs "2129*"
-
-    echo "qsub -hold_jid J1_* -N J1_MOSA -q test  JEMX1_mosa.sh 2129* "
-    qsub -hold_jid "J1_*" -N J1_MOSA -q test  JEMX1_mosa.sh "2129*"
+    pattern=${1:?pattern for mosaic} 
+    
+    sbatch --dependecy="after:*_ISGRI*" --name=I_MOSA $(which isdc-singularity) ISGRI_mosa.sh obs "${pattern}"
+    #sbatch --dependecy="after:*_JEMX1*" --name=J1_MOSA $(which isdc-singularity) JEMX1_mosa.sh obs "${pattern}"
 }
 
 function list-last-logs() {
