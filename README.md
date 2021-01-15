@@ -83,6 +83,8 @@ $ isdc-cli launch_by_scw osa11 ./ISGRI_onescw.sh
 
 ## Case workflows
 
+can be found here: https://github.com/ferrigno/osa-hpc-scripts
+
 ISGRI_onescw.sh
 
 or
@@ -109,3 +111,4 @@ isdc-cli, on the other hand, is used on the cluster itself. It is one of the pay
 Both tools can be used in conjunction.
 
 If only one cluster is used one may stick to more tradititional isdc-cli interface.
+

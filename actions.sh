@@ -22,7 +22,7 @@ function scwlist() {
 }
 
 function compat_warning() {
-	echo_red "OMC Light curve is in another script! please use launch_scw_job with any of ISDC_one.scripts"
+	echo_red "sorry, $(getent passwd savchenk | awk -F: '{print $5}' | awk '{print $2}'), this action is in another script! please use launch_scw_job with any of ISGRI/JEMX/etc_one.sh scripts, see https://github.com/ferrigno/osa-hpc-scripts for the reference scripts"
 }
 
 function launcher_omc_lc() {
