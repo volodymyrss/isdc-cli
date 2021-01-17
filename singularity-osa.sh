@@ -29,10 +29,12 @@ elif [ ${osa_version} == "11.0" ]; then
 	export init_suffix="";
 fi
 
-
+echo "REP_BASE_PROD: $REP_BASE_PROD"
+echo "DATA_ROOT: $DATA_ROOT"
 
 singularity exec \
         -B /srv:/srv \
+        -B $DATA_ROOT/:/data \
         -B $REP_BASE_PROD/cat:$PWD/cat \
         -B $REP_BASE_PROD/scw:$PWD/scw \
         -B $REP_BASE_PROD/aux:$PWD/aux \
@@ -44,6 +46,14 @@ singularity exec \
         -B $REP_BASE_PROD/ic:/isdc/arc/rev_3/ic \
         -B $REP_BASE_PROD/idx:/isdc/arc/rev_3/idx \
         $IMAGE \
-        bash -c "source $HOME/.bash_profile; export HOME_OVERRRIDE=$HOME; echo -n loading\ env...; source /init${init_suffix}.sh; echo done; $cmd"
+        bash -c "source $HOME/.bash_profile
+                 export HOME_OVERRRIDE=$HOME 
+                 echo -n loading\ env... 
+                 source /init${init_suffix}.sh 
+                 echo done 
+                 export REP_BASE_PROD_CONS=/isdc/arc/rev_3 
+                 export INTEGRAL_DATA=/isdc/arc/rev_3
+                 export CURRENT_IC=/isdc/arc/rev_3
+                 strace -e open -f $cmd"
 
 #
