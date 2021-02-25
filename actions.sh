@@ -97,10 +97,16 @@ function tail-last-log() {
 
 function download-data() {
 	scw=${1:?scw here}
+  INTEGRAL_DATA=${INTEGRAL_DATA:-/isdc/arc/rev_3}
 
-	set -x
+  if [ -d $INTEGRAL_DATA ]; then
+      echo -e "\033[32mwill download SCW $scw to INTEGRAL_DATA=$INTEGRAL_DATA\033[0m"
+  else
+      echo -e "\033[31mcan NOT download SCW $scw to INTEGRAL_DATA=$INTEGRAL_DATA directory does not exist!\033[0m"
+      exit 1
+  fi
 
-	INTEGRAL_DATA=/isdc/arc/rev_3/ \
+
 		bash <( curl https://raw.githubusercontent.com/volodymyrss/dda-ddosadm/master/download_data.sh ) ${scw::4} $scw
 }
 
