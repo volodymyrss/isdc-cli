@@ -126,6 +126,22 @@ function download-selected-data() {
 }
     
 
+function current-rev() {
+    utcnow=$(date +%Y-%m-%dT%H:%M:%S)
+    revnow=$(curl -s https://www.astro.unige.ch/cdci/astrooda/dispatch-data/gw/timesystem/api/v1.0/converttime/UTC/$utcnow/REVNUM)
+    revbound=$(curl -s https://www.astro.unige.ch/cdci/astrooda/dispatch-data/gw/timesystem/api/v1.0/converttime/REVNUM/$revnow/IJD)
+
+    revi1=$(echo $revbound | awk '{print $2}')
+    revi2=$(echo $revbound | awk '{print $3}')
+    
+    revu1=$(curl -s https://www.astro.unige.ch/cdci/astrooda/dispatch-data/gw/timesystem/api/v1.0/converttime/IJD/$revi1/UTC | sed 's/"//g')
+    revu2=$(curl -s https://www.astro.unige.ch/cdci/astrooda/dispatch-data/gw/timesystem/api/v1.0/converttime/IJD/$revi2/UTC | sed 's/"//g')
+
+    echo -e "UTC \033[32m$utcnow\033[0m"
+    echo -e "rev \033[31m$revnow\033[0m"
+    echo -e "    \033[33m$revu1\033[0m - \033[33m$revu2\033[0m"
+}
+
 if [ "$cmd" == "" ]; then
     C_STRONG="\033[32m"
     C_SUCCESS="\033[32m"
